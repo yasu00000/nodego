@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Sample</title>
+    <script>
+        // イメージオブジェクトを作成する。
+        var image    = new Image();
+        image.src    = "image.png";
+        var spriteX = 100;
+        var spriteY = 50;
+
+        // 描画関数
+        var draw = function()
+        {
+            // canvas オブジェクトを取得する。
+            var canvas    =
+                window.document.getElementById("screen");
+            var context    = canvas.getContext("2d");
+            // キャンバスのクリア。
+            context.clearRect( 0, 0,
+                canvas.width, canvas.height );
+            // 画像を描画する。
+            context.drawImage( image, 0, 0,
+                image.width, image.height, spriteX, spriteY,
+                image.width, image.height );
+            // 4角形を描画する。
+            context.fillStyle    = "rgb(192, 80, 77)";
+            context.fillRect( 50, 150, 300, 100 );
+            // 文字を描画する。
+            context.font    =
+                "bold 18px 'ＭＳ Ｐゴシック'";
+            context.fillStyle    = "rgb(255, 255, 255)";
+            context.fillText( "spriteX=" + spriteX + ", spriteY=" + spriteY, 60, 175 );
+        }
+
+        // キーボードイベント処理関数
+        window.onkeydown = function( event )
+        {
+            // canvas オブジェクトを取得する。
+            var canvas    =
+                window.document.getElementById("screen");
+            var minX    = 0;
+            var maxX    = canvas.width - image.width;
+
+            switch ( event.keyCode )
+            {
+                // 「←」
+                case 37:
+                    spriteX -= 20;
+                    if ( spriteX < minX ) { spriteX = minX; }
+                    break;
+                // 「→」
+                case 39:
+                    spriteX += 20;
+                    if ( spriteX > maxX ) { spriteX = maxX; }
+                    break;
+                }
+            draw();
+        };
+        window.onload = draw;
+    </script>
+</head>
+<body>
+    <canvas id="screen" width="400" height="300"
+        style="background-color: black;"></canvas>
+</body>
+</html>
